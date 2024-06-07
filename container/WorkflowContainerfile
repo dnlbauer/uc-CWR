@@ -1,0 +1,8 @@
+FROM ghcr.io/biodt/cwr:0.3.0
+
+WORKDIR /app
+
+COPY ["ModGP MASTER.R", "."]
+COPY ["R Scripts", "./R Scripts"]
+
+ENTRYPOINT ["Rscript", "ModGP MASTER.R"]
