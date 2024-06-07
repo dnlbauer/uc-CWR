@@ -203,9 +203,7 @@ RUN . /conda/etc/profile.d/conda.sh && \
 RUN . /conda/etc/profile.d/conda.sh && \
     conda activate /conda/env && \
     Rscript -e 'devtools::install_github("PhilipMostert/PointedSDMs", dependencies=FALSE)' && \
-    # Bugfix: Installing intSDM directly from github doesn't work so we install it first from cran
-    Rscript -e 'install.packages("intSDM")' && \
-    Rscript -e 'devtools::install_github("PhilipMostert/intSDM", dependencies=FALSE)' && \
+    Rscript -e 'devtools::install_url("https://github.com/PhilipMostert/intSDM/archive/refs/tags/V2.0.1.zip", dependencies=FALSE)' && \
     /conda/bin/conda clean -afy
 
 # Install mraster
