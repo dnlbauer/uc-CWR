@@ -114,18 +114,19 @@ CreateDir <- sapply(Dirs, function(x){
 rm(Dirs)
 
 ## API Credentials --------------------------------------------------------
-try(source(file.path(Dir.Scripts, "SHARED-APICredentials.R")))
-if(as.character(options("gbif_user")) == "NULL" ){
-	options(gbif_user=rstudioapi::askForPassword("my gbif username"))}
-if(as.character(options("gbif_email")) == "NULL" ){
-	options(gbif_email=rstudioapi::askForPassword("my registred gbif e-mail"))}
-if(as.character(options("gbif_pwd")) == "NULL" ){
-	options(gbif_pwd=rstudioapi::askForPassword("my gbif password"))}
+get_env_or_stop <- function(env_name) {
+    env_var <- Sys.getenv(env_name, unset=NA)
+	if (is.na(env_var)) {
+		stop(paste("Environment variable", env_name, "not set."))
+	}
+    return(env_var)
+}
+options(gbif_user=get_env_or_stop("GBIF_USER_NAME"))
+options(gbif_email=get_env_or_stop("GBIF_USER_EMAIL"))
+options(gbif_pwd=get_env_or_stop("GBIF_USER_PASSWORD"))
 
-if(!exists("API_Key") | !exists("API_User")){ # CS API check: if CDS API credentials have not been specified elsewhere
-	API_User <- readline(prompt = "Please enter your Climate Data Store API user number and hit ENTER.")
-	API_Key <- readline(prompt = "Please enter your Climate Data Store API key number and hit ENTER.")
-} # end of CDS API check
+API_Key <- get_env_or_stop("CDS_API_KEY")
+API_User <- get_env_or_stop("CDS_API_USER")
 
 # Choose the number of parallel processes
 RUNNING_ON_LUMI <- !is.na(strtoi(Sys.getenv("CWR_ON_LUMI")))
