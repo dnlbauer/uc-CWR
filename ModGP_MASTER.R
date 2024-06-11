@@ -99,7 +99,7 @@ loadObj <- function(file.name){
 ## Directories ------------------------------------------------------------
 ### Define directories in relation to project directory
 Dir.Base <- getwd()
-Dir.Scripts <- file.path(Dir.Base, "R Scripts")
+Dir.Scripts <- file.path(Dir.Base, "R_Scripts")
 Dir.Data <- file.path(Dir.Base, "Data")
 Dir.Data.ModGP <- file.path(Dir.Data, "ModGP")
 Dir.Data.GBIF <- file.path(Dir.Data, "GBIF")
