@@ -157,12 +157,18 @@ source(file.path(Dir.Scripts,"ModGP-Outputs.R"))
 # DATA ====================================================================
 ## GBIF Data --------------------------------------------------------------
 message("Retrieving GBIF data")
+# test if we can run modgp on species level with this small hack
+GBIF_MODE = "ModGP"
+if (!is.na(strtoi(Sys.getenv("GBIF_WITH_SPECIES")))) {
+    message("Setting mode to Capfitogen for GBIF")
+    GBIF_MODE = "Capfitogen"
+}
 ## species of interest
 Species_ls <- FUN.DownGBIF(
 	species = SPECIES, # which species to pull data for
 	Dir = Dir.Data.GBIF, # where to store the data output on disk
 	Force = FALSE, # do not overwrite already present data
-	Mode = "ModGP", # query download for entire genus
+	Mode = GBIF_MODE, # query download for entire genus
 	parallel = 1 # no speed gain here for parallelising on personal machine
 	)
 
